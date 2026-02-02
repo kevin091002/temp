@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temperature Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      width: 320px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Temperature Converter</h2>
+
+    <input type="text" id="tempInput" placeholder="Enter temperature">
+
+    <select id="conversionType">
+      <option value="cToF">Celsius → Fahrenheit</option>
+      <option value="fToC">Fahrenheit → Celsius</option>
+    </select>
+
+    <button id="convertBtn">Convert</button>
+
+    <div class="result" id="result"></div>
+    <div class="error" id="error"></div>
+  </div>
+
+  <script>
+    const tempInput = document.getElementById("tempInput");
+    const conversionType = document.getElementById("conversionType");
+    const convertBtn = document.getElementById("convertBtn");
+    const result = document.getElementById("result");
+    const error = document.getElementById("error");
+
+    convertBtn.addEventListener("click", convertTemperature);
+
+    function convertTemperature() {
+      const value = tempInput.value.trim();
+
+      result.textContent = "";
+      error.textContent = "";
+
+      // Input validation
+      if (value === "") {
+        error.textContent = "Please enter a temperature value";
+        return;
+      }
+
+      if (isNaN(value)) {
+        error.textContent = "Please enter a valid number";
+        return;
+      }
+
+      const temp = parseFloat(value);
+      let convertedTemp;
+
+      if (conversionType.value === "cToF") {
+        convertedTemp = (temp * 9/5) + 32;
+        result.textContent = `${convertedTemp.toFixed(2)} °F`;
+      } else {
+        convertedTemp = (temp - 32) * 5/9;
+        result.textContent = `${convertedTemp.toFixed(2)} °C`;
+      }
+    }
+  </script>
+
+</body>
+</html>
